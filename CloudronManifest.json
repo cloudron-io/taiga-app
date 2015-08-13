@@ -9,6 +9,7 @@
   "httpPort": 8000,
   "addons": {
     "localstorage": {},
+    "sendmail": {},
     "postgresql": {}
   },
   "minBoxVersion": "0.0.1",

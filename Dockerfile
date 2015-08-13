@@ -16,19 +16,11 @@ RUN apt-get install -y postgresql-9.4 postgresql-contrib-9.4 postgresql-server-d
 RUN apt-get install -y nginx
 
 WORKDIR /app/code
-RUN virtualenv -p /usr/bin/python3.4 taiga
-ENV PATH /app/code/taga/bin:$PATH
-
-RUN easy_install pip
-
-## circus process manager
-RUN pip install circus
 
 ## backend
 RUN git clone https://github.com/taigaio/taiga-back.git taiga-back
 WORKDIR /app/code/taiga-back
 RUN git checkout stable
-RUN pip install -r requirements.txt
 
 ## frontend
 WORKDIR /app/code

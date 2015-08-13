@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu -o pipefail
+# set -eu -o pipefail
 
 echo "==============="
 
@@ -15,11 +15,9 @@ sed -e "s/MEDIA_URL = \".*\"/MEDIA_URL = \"https:\/\/${HOSTNAME}\/media\/\"/" \
     -e "s/\"PASSWORD\": \".*\",/\"PASSWORD\": \"${POSTGRESQL_PASSWORD}\",/" \
     -e "s/\"HOST\": \".*\",/\"HOST\": \"${POSTGRESQL_HOST}\",/" \
     -e "s/\"PORT\": \".*\",/\"PORT\": \"${POSTGRESQL_PORT}\",/" \
-
     -e "s/\"EMAIL_HOST\": \".*\",/\"EMAIL_HOST\": \"${MAIL_SMTP_SERVER}\",/" \
     -e "s/\"EMAIL_PORT\": \".*\",/\"EMAIL_PORT\": \"${MAIL_SMTP_PORT}\",/" \
     -e "s/\"EMAIL_HOST_USER\": \".*\",/\"EMAIL_HOST_USER\": \"${MAIL_SMTP_USERNAME}\",/" \
-
     -i /app/code/taiga-back/settings/local.py
 
 echo "update conf.json"
@@ -38,6 +36,25 @@ sed -e "s/\"api\": \".*\",/\"api\": \"https:\/\/${HOSTNAME}\/api\/v1\/\",/" \
 echo "update nginx"
 service nginx restart
 
-/usr/local/bin/circusd /app/code/circus.ini
+echo "setup taiga"
+cd /app/code
+virtualenv -p /usr/bin/python3.4 taiga
+source /app/code/taiga/bin/activate
+
+python --version
+
+echo "install pip"
+easy_install pip
+
+echo "install circus"
+pip install circus
+
+echo "install taiga deps"
+cd /app/code/taiga-back
+pip install -r requirements.txt
+
+cd /app/code
+
+# /usr/local/bin/circusd /app/code/circus.ini
 
 read
