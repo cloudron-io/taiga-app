@@ -37,6 +37,7 @@ sed -e "s/\"api\": \".*\",/\"api\": \"https:\/\/${HOSTNAME}\/api\/v1\/\",/" \
 
 echo "update nginx"
 service nginx restart
-#service circus start
+
+/usr/local/bin/circusd /app/code/circus.ini
 
 read

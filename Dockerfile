@@ -39,7 +39,6 @@ RUN git checkout stable
 WORKDIR /app/code
 
 ADD circus.ini /app/code/circus.ini
-ADD circus.conf /etc/init/circus.conf
 RUN rm /etc/nginx/sites-enabled/default
 ADD taiga.nginx.conf /etc/nginx/sites-enabled/taiga
 ADD conf.json /app/code/taiga-front-dist/dist/js/conf.json
