@@ -18,7 +18,9 @@ WORKDIR /app/code
 RUN git clone https://github.com/taigaio/taiga-back.git taiga-back
 WORKDIR /app/code/taiga-back
 RUN git checkout stable
-RUN mkvirtualenv -p /usr/bin/python3.4 taiga
+# RUN mkvirtualenv -p /usr/bin/python3.4 taiga
+RUN apt-get install -y postgresql-9.4 postgresql-contrib-9.4
+RUN apt-get install -y postgresql-server-dev-9.4
 RUN pip install -r requirements.txt
 
 ## frontend
@@ -34,6 +36,8 @@ ADD circus.ini /app/code/circus.ini
 ADD circus.conf /etc/init/circus.conf
 RUN rm /etc/nginx/sites-enabled/default
 ADD taiga.nginx.conf /etc/nginx/sites-enabled/taiga
+ADD conf.json /app/code/taiga-front-dist/dist/js/conf.json
+ADD local.py /app/code/taiga-back/settings/local.py
 ADD start.sh /app/code/start.sh
 
 CMD [ "/app/code/start.sh" ]
