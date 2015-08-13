@@ -8,19 +8,26 @@ RUN apt-get install -y build-essential binutils-doc autoconf flex bison libjpeg-
 RUN apt-get install -y libfreetype6-dev zlib1g-dev libzmq3-dev libgdbm-dev libncurses5-dev
 RUN apt-get install -y automake libtool libffi-dev curl git tmux gettext
 
-RUN apt-get install -y python3 python3-pip python-dev python3-dev python-pip virtualenvwrapper
+RUN apt-get install -y python3 python3-pip python-dev python3-dev virtualenvwrapper
 RUN apt-get install -y libxml2-dev libxslt-dev
+
+RUN apt-get install -y postgresql-9.4 postgresql-contrib-9.4 postgresql-server-dev-9.4
 
 RUN apt-get install -y nginx
 
-## backend
 WORKDIR /app/code
+RUN virtualenv -p /usr/bin/python3.4 taiga
+ENV PATH /app/code/taga/bin:$PATH
+
+RUN easy_install pip
+
+## circus process manager
+RUN pip install circus
+
+## backend
 RUN git clone https://github.com/taigaio/taiga-back.git taiga-back
 WORKDIR /app/code/taiga-back
 RUN git checkout stable
-# RUN mkvirtualenv -p /usr/bin/python3.4 taiga
-RUN apt-get install -y postgresql-9.4 postgresql-contrib-9.4
-RUN apt-get install -y postgresql-server-dev-9.4
 RUN pip install -r requirements.txt
 
 ## frontend
@@ -29,8 +36,7 @@ RUN git clone https://github.com/taigaio/taiga-front-dist.git taiga-front-dist
 WORKDIR /app/code/taiga-front-dist
 RUN git checkout stable
 
-## circus process manager
-RUN pip2 install circus
+WORKDIR /app/code
 
 ADD circus.ini /app/code/circus.ini
 ADD circus.conf /etc/init/circus.conf
