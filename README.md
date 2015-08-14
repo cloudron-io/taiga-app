@@ -1,7 +1,7 @@
 Taiga
 =====
 
-[![Install on Cloudron](http://localhost:4000/img/installbutton32.png)](http://localhost:4000)
+[![Install on Cloudron](https://dev.cloudron.io/img/installbutton32.png)](https://dev.cloudron.io/)
 
 http://taigaio.github.io/taiga-doc/dist/setup-production.html
 
