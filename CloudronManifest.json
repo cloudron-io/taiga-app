@@ -16,6 +16,6 @@
   "manifestVersion": 1,
   "website": "https://taiga.io/",
   "contactEmail": "support@cloudron.io",
-  "icon": "",
+  "icon": "logo.png",
   "mediaLinks": [ ]
 }
