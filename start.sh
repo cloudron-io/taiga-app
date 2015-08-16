@@ -2,7 +2,7 @@
 
 # set -eu -o pipefail
 
-echo "==============="
+echo "========= Start ========="
 
 echo "local.py"
 sed -e "s/MEDIA_URL = \".*\"/MEDIA_URL = \"https:\/\/${HOSTNAME}\/media\/\"/" \
@@ -22,39 +22,27 @@ sed -e "s/MEDIA_URL = \".*\"/MEDIA_URL = \"https:\/\/${HOSTNAME}\/media\/\"/" \
 
 echo "update conf.json"
 sed -e "s/\"api\": \".*\",/\"api\": \"https:\/\/${HOSTNAME}\/api\/v1\/\",/" \
-    -e "s/\"eventsUrl\": \".*\",/\"eventsUrl\": \"ws:\/\/${HOSTNAME}\/events\",/" \
+    -e "s/\"eventsUrl\": \".*\",/\"eventsUrl\": \"wss:\/\/${HOSTNAME}\/events\",/" \
     -i /app/code/taiga-front-dist/dist/js/conf.json
-
-# cd /app/code/taiga-back/
-# python manage.py migrate --noinput
-# python manage.py loaddata initial_user
-# python manage.py loaddata initial_project_templates
-# python manage.py loaddata initial_role
-# python manage.py compilemessages
-# python manage.py collectstatic --noinput
 
 echo "update nginx"
 service nginx restart
 
-echo "setup taiga"
+echo "setup taiga virtual env"
 cd /app/code
-virtualenv -p /usr/bin/python3.4 taiga
 source /app/code/taiga/bin/activate
 
-python --version
-
-echo "install pip"
-easy_install pip
-
-echo "install circus"
-pip install circus
-
-echo "install taiga deps"
+echo "run migration scripts"
 cd /app/code/taiga-back
-pip install -r requirements.txt
+python manage.py migrate --noinput
+python manage.py loaddata initial_user
+python manage.py loaddata initial_project_templates
+python manage.py loaddata initial_role
+python manage.py collectstatic --noinput
+python manage.py compilemessages
 
 cd /app/code
 
-# /usr/local/bin/circusd /app/code/circus.ini
+taiga/bin/circusd /app/code/circus.ini
 
 read
