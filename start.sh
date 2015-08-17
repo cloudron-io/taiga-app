@@ -4,7 +4,7 @@
 
 echo "========= Start ========="
 
-echo "local.py"
+echo "--> local.py"
 # toplevel variables
 sed -e "s/MEDIA_URL = \".*\"/MEDIA_URL = \"https:\/\/${HOSTNAME}\/media\/\"/" \
     -e "s/STATIC_URL = \".*\"/STATIC_URL = \"https:\/\/${HOSTNAME}\/static\/\"/" \
@@ -27,19 +27,16 @@ sed -e "s/\"NAME\": \".*\",/\"NAME\": \"${POSTGRESQL_DATABASE}\",/" \
     -e "s/\"PORT\": \".*\",/\"PORT\": \"${POSTGRESQL_PORT}\",/" \
     -i /app/code/taiga-back/settings/local.py
 
-echo "update conf.json"
+echo "--> Update conf.json"
 sed -e "s/\"api\": \".*\",/\"api\": \"https:\/\/${HOSTNAME}\/api\/v1\/\",/" \
     -e "s/\"eventsUrl\": \".*\",/\"eventsUrl\": \"wss:\/\/${HOSTNAME}\/events\",/" \
     -i /app/code/taiga-front-dist/dist/js/conf.json
 
-echo "update nginx"
-service nginx restart
-
-echo "setup taiga virtual env"
+echo "--> Setup taiga virtual env"
 cd /app/code
 source /app/code/taiga/bin/activate
 
-echo "run migration scripts"
+echo "--> Run migration scripts"
 cd /app/code/taiga-back
 python manage.py migrate --noinput
 # python manage.py loaddata initial_user
@@ -48,6 +45,8 @@ python manage.py loaddata initial_project_templates
 
 cd /app/code
 
-taiga/bin/circusd /app/code/circus.ini
+echo "--> Start nginx"
+service nginx restart
 
-read
+echo "--> Start taiga-back"
+taiga/bin/circusd /app/code/circus.ini
