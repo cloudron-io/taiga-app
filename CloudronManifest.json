@@ -2,8 +2,8 @@
   "id": "io.taiga.cloudronapp",
   "title": "Taiga",
   "author": "Taiga Authors",
-  "description": "Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.",
-  "tagline": "Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.",
+  "description": "Taiga is a project management platform for startups and agile developers & designers.",
+  "tagline": "file://DESCRIPTION.md",
   "version": "0.0.1",
   "healthCheckPath": "/",
   "httpPort": 8000,
@@ -18,5 +18,11 @@
   "website": "https://taiga.io/",
   "contactEmail": "support@cloudron.io",
   "icon": "logo.png",
-  "mediaLinks": [ ]
+  "mediaLinks": [
+    "https://i.imgur.com/lwD0kKR.png",
+    "https://i.imgur.com/mgQu5QD.png",
+    "https://i.imgur.com/YMXzySO.png",
+    "https://i.imgur.com/zMEzCHv.png",
+    "https://i.imgur.com/muT1pMw.png"
+  ]
 }
