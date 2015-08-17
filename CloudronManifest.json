@@ -10,7 +10,8 @@
   "addons": {
     "localstorage": {},
     "sendmail": {},
-    "postgresql": {}
+    "postgresql": {},
+    "ldap": {}
   },
   "minBoxVersion": "0.0.1",
   "manifestVersion": 1,

@@ -9,6 +9,7 @@
     "privacyPolicyUrl": null,
     "termsOfServiceUrl": null,
     "maxUploadFileSize": null,
+    "loginFormType": "ldap",
     "contribPlugins": []
 }
 

@@ -18,3 +18,11 @@ easy_install pip
 echo "install taiga deps"
 cd /app/code/taiga-back
 pip install -r requirements.txt
+
+echo "install taiga-contrib-ldap-auth"
+pip install taiga-contrib-ldap-auth
+
+echo "run migration scripts"
+cd /app/code/taiga-back
+python manage.py collectstatic --noinput
+python manage.py compilemessages

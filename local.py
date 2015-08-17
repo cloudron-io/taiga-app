@@ -37,3 +37,22 @@ DATABASES = {
         "PORT": "",
     }
 }
+
+INSTALLED_APPS += ["taiga_contrib_ldap_auth"]
+
+LDAP_SERVER = "ldap://ldap.example.com"
+LDAP_PORT = 389
+
+# Full DN of the service account use to connect to LDAP server and search for login user's account entry
+# If LDAP_BIND_DN is not specified, or is blank, then an anonymous bind is attempated
+LDAP_BIND_DN = ""
+LDAP_BIND_PASSWORD = ""
+# Starting point within LDAP structure to search for login user
+LDAP_SEARCH_BASE = "OU=DevTeam,DC=example,DC=net"
+# LDAP property used for searching, ie. login username needs to match value in sAMAccountName property in LDAP
+LDAP_SEARCH_PROPERTY = "sAMAccountName"
+LDAP_SEARCH_SUFFIX = None # '@example.com'
+
+# Names of LDAP properties on user account to get email and full name
+LDAP_EMAIL_PROPERTY = "mail"
+LDAP_FULL_NAME_PROPERTY = "displayname"
