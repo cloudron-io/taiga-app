@@ -4,7 +4,7 @@
   "author": "Taiga Authors",
   "description": "Taiga is a project management platform for startups and agile developers & designers.",
   "tagline": "file://DESCRIPTION.md",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "healthCheckPath": "/",
   "httpPort": 8000,
   "addons": {
