@@ -4,7 +4,7 @@
     "api": "http://example.com/api/v1/",
     "eventsUrl": "ws://example.com/events",
     "debug": "true",
-    "publicRegisterEnabled": true,
+    "publicRegisterEnabled": false,
     "feedbackEnabled": true,
     "privacyPolicyUrl": null,
     "termsOfServiceUrl": null,
