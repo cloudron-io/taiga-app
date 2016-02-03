@@ -1,6 +1,6 @@
 {
-    "api": "http://example.com/api/v1/",
-    "eventsUrl": "ws://example.com/events",
+    "api": "https://##APP_DOMAIN##/api/v1/",
+    "eventsUrl": "wss://##APP_DOMAIN##/events",
     "eventsMaxMissedHeartbeats": 5,
     "eventsHeartbeatIntervalTime": 60000,
     "debug": true,
