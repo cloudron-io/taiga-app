@@ -2,7 +2,7 @@
   "id": "io.taiga.cloudronapp",
   "title": "Taiga",
   "author": "Taiga Authors",
-  "tagline": "Taiga is a project management platform",
+  "tagline": "Project management platform",
   "description": "file://DESCRIPTION.md",
   "version": "0.1.0",
   "healthCheckPath": "/",
@@ -13,6 +13,16 @@
     "postgresql": {},
     "ldap": {}
   },
+  "tags": [
+    "scrum",
+    "kanban",
+    "project management",
+    "agile",
+    "backlog",
+    "srints",
+    "issue tracking",
+    "bug tracking"
+  ],
   "developmentMode": false,
   "minBoxVersion": "0.4.0",
   "manifestVersion": 1,
