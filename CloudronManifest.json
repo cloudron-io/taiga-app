@@ -8,7 +8,6 @@
   "healthCheckPath": "/",
   "httpPort": 8000,
   "addons": {
-    "localstorage": {},
     "sendmail": {},
     "postgresql": {},
     "ldap": {}
