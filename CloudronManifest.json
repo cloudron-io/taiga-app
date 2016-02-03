@@ -13,7 +13,8 @@
     "postgresql": {},
     "ldap": {}
   },
-  "minBoxVersion": "0.0.1",
+  "developmentMode": false,
+  "minBoxVersion": "0.4.0",
   "manifestVersion": 1,
   "website": "https://taiga.io/",
   "contactEmail": "support@cloudron.io",
