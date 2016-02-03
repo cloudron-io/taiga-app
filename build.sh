@@ -9,9 +9,6 @@ cd /app/code
 virtualenv -p /usr/bin/python3.4 taiga
 source /app/code/taiga/bin/activate
 
-echo "install circus"
-pip install circus
-
 echo "install pip"
 easy_install pip
 
