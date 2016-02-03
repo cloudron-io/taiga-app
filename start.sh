@@ -17,20 +17,21 @@ sed -e "s/MEDIA_URL = \".*\"/MEDIA_URL = \"https:\/\/${HOSTNAME}\/media\/\"/" \
     -e "s/LDAP_SERVER = \".*\"/LDAP_SERVER = \"ldap:\/\/${LDAP_SERVER}\"/" \
     -e "s/LDAP_PORT = .*/LDAP_PORT = ${LDAP_PORT}/" \
     -e "s/LDAP_SEARCH_BASE = \".*\"/LDAP_SEARCH_BASE = \"${LDAP_USERS_BASE_DN}\"/" \
-    -i /app/code/taiga-back/settings/local.py
-
-# object properties
-sed -e "s/\"NAME\": \".*\",/\"NAME\": \"${POSTGRESQL_DATABASE}\",/" \
+    -e "s/\"NAME\": \".*\",/\"NAME\": \"${POSTGRESQL_DATABASE}\",/" \
     -e "s/\"USER\": \".*\",/\"USER\": \"${POSTGRESQL_USERNAME}\",/" \
     -e "s/\"PASSWORD\": \".*\",/\"PASSWORD\": \"${POSTGRESQL_PASSWORD}\",/" \
     -e "s/\"HOST\": \".*\",/\"HOST\": \"${POSTGRESQL_HOST}\",/" \
     -e "s/\"PORT\": \".*\",/\"PORT\": \"${POSTGRESQL_PORT}\",/" \
-    -i /app/code/taiga-back/settings/local.py
+    /app/code/local.py  > /run/local.py
 
 echo "--> Update conf.json"
-sed -e "s/\"api\": \".*\",/\"api\": \"https:\/\/${HOSTNAME}\/api\/v1\/\",/" \
-    -e "s/\"eventsUrl\": \".*\",/\"eventsUrl\": \"wss:\/\/${HOSTNAME}\/events\",/" \
-    -i /app/code/taiga-front-dist/dist/js/conf.json
+sed -e "s/\"api\": \".*\",/\"api\": \"https:\/\/${APP_DOMAIN}\/api\/v1\/\",/" \
+    -e "s/\"eventsUrl\": \".*\",/\"eventsUrl\": \"wss:\/\/${APP_DOMAIN}\/events\",/" \
+    /app/code/conf.json > /run/conf.json
+
+echo "--> Update nginx.conf"
+sed -e "s,##HOSTNAME##,${APP_DOMAIN}," \
+    /app/code/nginx.conf  > /run/nginx.conf
 
 echo "--> Setup taiga virtual env"
 cd /app/code
@@ -45,8 +46,23 @@ python manage.py loaddata initial_project_templates
 
 cd /app/code
 
+echo "--> Make cloudron own /run"
+chown -R cloudron:cloudron /run
+
 echo "--> Start nginx"
-service nginx restart
+nginx -c /run/nginx.conf &
 
 echo "--> Start taiga-back"
-taiga/bin/circusd /app/code/circus.ini
+PATH=/app/code/taiga/bin:$PATH
+TERM=rxvt-256color
+
+SHELL=/bin/bash
+USER=root
+LANG=en_US.UTF-8
+HOME=/app/code
+PYTHONPATH=/app/code/taiga/lib/python3.4/site-packages
+
+cd /app/code/taiga-back
+
+exec /usr/local/bin/gosu cloudron:cloudron gunicorn -w 1 -t 60 --pythonpath=. -b 127.0.0.1:8001 taiga.wsgi
+# taiga/bin/circusd /app/code/circus.ini
