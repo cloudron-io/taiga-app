@@ -3,8 +3,9 @@
   "title": "Taiga",
   "author": "Taiga Authors",
   "tagline": "Project management platform",
-  "description": "file://DESCRIPTION.md",
   "version": "0.1.0",
+  "description": "file://DESCRIPTION.md",
+  "changelog": "file://CHANGELOG",
   "healthCheckPath": "/",
   "httpPort": 8000,
   "addons": {
