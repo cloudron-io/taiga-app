@@ -3,7 +3,7 @@ MAINTAINER Johannes Zellner <support@cloudron.io>
 
 EXPOSE 8000
 
-RUN mkdir -p /app/code
+RUN mkdir -p /app/code /app/data
 WORKDIR /app/code
 
 RUN apt-get update && apt-get install -y \
@@ -19,6 +19,8 @@ RUN cd /app/code/taiga-back && git checkout stable
 ## frontend
 RUN git clone https://github.com/taigaio/taiga-front-dist.git taiga-front-dist
 RUN cd /app/code/taiga-front-dist && git checkout stable
+
+RUN rm -rf /app/code/taiga-back/media && mkdir /app/data/media && ln -s /app/data/media /app/code/taiga-back/media
 
 ## install all deps in a python virtual env
 ADD build.sh /app/code/build.sh

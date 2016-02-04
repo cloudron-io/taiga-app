@@ -27,19 +27,18 @@ echo "--> Update nginx.conf"
 sed -e "s,##APP_DOMAIN##,${APP_DOMAIN}," /app/code/nginx.conf  > /run/nginx.conf
 
 echo "--> Setup taiga virtual env"
-cd /app/code
 source /app/code/taiga/bin/activate
 
-echo "--> Create taiga-back copy to work with"
-cp -rf /app/code/taiga-back /run/taiga-back
+mkdir -p /app/data/media/user
 
 echo "--> Run migration scripts"
-cd /run/taiga-back
+cd /app/code/taiga-back
 python manage.py migrate --noinput
 python manage.py loaddata initial_project_templates
 
 echo "--> Make cloudron own /run"
 chown -R cloudron:cloudron /run
+chown -R cloudron:cloudron /app/data
 
 echo "--> Start nginx"
 nginx -c /run/nginx.conf &
@@ -49,6 +48,6 @@ PATH=/app/code/taiga/bin:$PATH
 HOME=/app/code
 PYTHONPATH=/app/code/taiga/lib/python3.4/site-packages
 
-cd /run/taiga-back
+cd /app/code/taiga-back
 
 exec /usr/local/bin/gosu cloudron:cloudron gunicorn -w 1 -t 60 --pythonpath=. -b 127.0.0.1:8001 taiga.wsgi
