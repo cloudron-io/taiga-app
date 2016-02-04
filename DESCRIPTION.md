@@ -1,15 +1,15 @@
+### Overview
+
 Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
 
-Features
---------
+### Features
   * **Backlog** - Keeps the running list of all features and User Stories that make up your project.
   * **Kaban** - Fully Customizable Post-it Note type layout of your workflow.
   * **Tasks** - Further define the work required to complete each User Story.
   * **Sprints** - Gathers and Tracks the User Stories and Tasks that can be worked on by your team within a given time frame.
   * **Issues** - Track issues and bugs, assign tags, responsibility and keep traceability.
 
-Focus on
---------
+### Focus on
   * Fun to use
   * Intuitive and Easy to use
   * Clean to not distract
@@ -17,3 +17,6 @@ Focus on
   * Keep your team in sync
   * Do not rule over you
 
+### Caveats
+
+This app version is fully intergrated into the Cloudron user management. This currently makes it impossible to invite external users to projects.
