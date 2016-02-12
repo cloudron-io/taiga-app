@@ -20,7 +20,8 @@ RUN curl -L https://github.com/taigaio/taiga-back/tarball/e1fe52639b6d9e87c621fc
 RUN mkdir /app/code/taiga-front-dist
 RUN curl -L https://github.com/taigaio/taiga-front-dist/tarball/f55f6f1f9e4b93de0dd495de3e1887e6072c776f | tar -xz -C /app/code/taiga-front-dist --strip-components 1 -f -
 
-RUN rm -rf /app/code/taiga-back/media && mkdir /app/data/media && ln -s /app/data/media /app/code/taiga-back/media
+RUN rm -rf /app/code/taiga-back/media && \
+    ln -s /app/data/media /app/code/taiga-back/media
 
 ## install all deps in a python virtual env
 ADD build.sh /app/code/build.sh
