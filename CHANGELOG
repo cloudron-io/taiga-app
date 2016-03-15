@@ -4,3 +4,5 @@
 [0.1.1]
 * Pin revision to e1fe52639b6d9e87
 
+[0.2.0]
+* Use upstream version 1.10.0

@@ -3,7 +3,7 @@
   "title": "Taiga",
   "author": "Taiga Authors",
   "tagline": "Project management platform",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "file://DESCRIPTION.md",
   "changelog": "file://CHANGELOG",
   "healthCheckPath": "/",
