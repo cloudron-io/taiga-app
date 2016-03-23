@@ -8,7 +8,7 @@ This app uses the ldap community plugin https://github.com/ensky/taiga-contrib-l
 
 The main installation guide is at http://taigaio.github.io/taiga-doc/dist/setup-production.html
 
-[![Install](https://cloudron.io/img/button32.png)](https://cloudron.io/button.html?app=io.taiga.cloudronapp)
+[![Install](https://cloudron.io/img/button.svg)](https://cloudron.io/button.html?app=io.taiga.cloudronapp)
 
 or using the [Cloudron command line tooling](https://cloudron.io/references/cli.html)
 
