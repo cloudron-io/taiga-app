@@ -77,7 +77,7 @@ describe('Application life cycle test', function () {
         execSync('cloudron build', { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' });
     });
 
-    xit('install app', function () {
+    it('install app', function () {
         execSync('cloudron install --new --wait --location ' + LOCATION, { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' });
     });
 
@@ -91,15 +91,15 @@ describe('Application life cycle test', function () {
 
     it('can login', login);
 
-    xit('can dismiss tutorial', function (done) {
+    it('can dismiss tutorial', function (done) {
         browser.get('https://' + app.fqdn);
 
-        browser.wait(until.elementLocated(by.className('introjs-skipbutton')), TEST_TIMEOUT);
-        browser.wait(until.elementIsVisible(browser.findElement(by.className('introjs-skipbutton'))), TEST_TIMEOUT);
+        waitForElement(by.className('introjs-skipbutton'), function () {
+            browser.findElement(by.className('introjs-skipbutton')).sendKeys(Keys.ENTER);
 
-        browser.findElement(by.className('introjs-button introjs-skipbutton')).click();
-
-        done();
+            // give some time to ack
+            setTimeout(done, 5000);
+        });
     });
 
     it('can create project', function (done) {
@@ -156,7 +156,7 @@ describe('Application life cycle test', function () {
 
     it('move to different location', function () {
         browser.manage().deleteAllCookies();
-        execSync('cloudron install --location ' + LOCATION + '2', { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' });
+        execSync('cloudron install --location ' + LOCATION + '2 --app ' + app.id, { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' });
         var inspect = JSON.parse(execSync('cloudron inspect'));
         app = inspect.apps.filter(function (a) { return a.location === LOCATION + '2'; })[0];
         expect(app).to.be.an('object');
@@ -174,12 +174,12 @@ describe('Application life cycle test', function () {
             waitForElement(by.xpath('//a[@title="Yes, I\'m really sure"]'), function () {
                 browser.findElement(by.xpath('//a[@title="Yes, I\'m really sure"]')).click();
 
-                waitForElement(by.xpath('//p[text()="You don\'t have any projects yet"]'), done);
+                waitForElement(by.className('create-project-button'), done);
             });
         });
     });
 
-    xit('uninstall app', function () {
+    it('uninstall app', function () {
         execSync('cloudron uninstall --app ' + app.id, { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' });
     });
 });
