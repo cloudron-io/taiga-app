@@ -29,12 +29,16 @@ sed -e "s,##APP_DOMAIN##,${APP_DOMAIN}," /app/code/nginx.conf  > /run/nginx.conf
 echo "--> Setup taiga virtual env"
 source /app/code/taiga/bin/activate
 
-mkdir -p /app/data/media/user
-
 echo "--> Run migration scripts"
-cd /app/code/taiga-back
-python manage.py migrate --noinput
-python manage.py loaddata initial_project_templates
+if [[ ! -d /app/data/media/user ]]; then
+    echo "--> New installation create inital project templates"
+
+    mkdir -p /app/data/media/user
+    cd /app/code/taiga-back
+
+    python manage.py migrate --noinput
+    python manage.py loaddata initial_project_templates
+fi
 
 echo "--> Make cloudron own /run"
 chown -R cloudron:cloudron /run
