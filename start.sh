@@ -7,9 +7,11 @@ echo "========= Start ========="
 echo "--> local.py"
 sed -e "s/##APP_DOMAIN##/${APP_DOMAIN}/" \
     -e "s/##MAIL_DOMAIN##/${MAIL_DOMAIN}/" \
+    -e "s/##MAIL_FROM##/${MAIL_FROM}/" \
     -e "s/##MAIL_SMTP_SERVER##/${MAIL_SMTP_SERVER}/" \
     -e "s/##MAIL_SMTP_PORT##/${MAIL_SMTP_PORT}/" \
     -e "s/##MAIL_SMTP_USERNAME##/${MAIL_SMTP_USERNAME}/" \
+    -e "s/##MAIL_SMTP_PASSWORD##/${MAIL_SMTP_PASSWORD}/" \
     -e "s/##LDAP_SERVER##/${LDAP_SERVER}/" \
     -e "s/##LDAP_PORT##/${LDAP_PORT}/" \
     -e "s/##LDAP_USERS_BASE_DN##/${LDAP_USERS_BASE_DN}/" \
