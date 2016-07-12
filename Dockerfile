@@ -14,11 +14,11 @@ RUN apt-get update && apt-get install -y \
 
 ## backend
 RUN mkdir /app/code/taiga-back
-RUN curl -L https://github.com/taigaio/taiga-back/archive/1.10.0.tar.gz | tar -xz -C /app/code/taiga-back --strip-components 1 -f -
+RUN curl -L https://github.com/taigaio/taiga-back/archive/2.1.0.tar.gz | tar -xz -C /app/code/taiga-back --strip-components 1 -f -
 
 ## frontend
 RUN mkdir /app/code/taiga-front-dist
-RUN curl -L https://github.com/taigaio/taiga-front-dist/archive/1.10.0-stable.tar.gz | tar -xz -C /app/code/taiga-front-dist --strip-components 1 -f -
+RUN curl -L https://github.com/taigaio/taiga-front-dist/archive/2.1.0-stable.tar.gz | tar -xz -C /app/code/taiga-front-dist --strip-components 1 -f -
 
 RUN rm -rf /app/code/taiga-back/media && \
     ln -s /app/data/media /app/code/taiga-back/media
