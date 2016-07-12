@@ -29,4 +29,11 @@ cloudron install
 
 ## Testing
 
-No tests yet.
+The e2e tests are located in the `test/` folder and require [nodejs](http://nodejs.org/). They are creating a fresh build, install the app on your Cloudron, backup and restore.
+
+```
+cd taiga-app/test
+
+npm install
+USERNAME=<cloudron username> PASSWORD=<cloudron password> mocha --bail test.js
+```
