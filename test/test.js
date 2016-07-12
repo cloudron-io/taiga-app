@@ -40,7 +40,7 @@ describe('Application life cycle test', function () {
     });
 
     var LOCATION = 'taigatest';
-    var TEST_TIMEOUT = 10000;
+    var TEST_TIMEOUT = 50000;
     var PROJECT_NAME = 'testproject';
     var PROJECT_DESCRIPTION = 'testdescription';
     var USER_STORY_SUBJECT = 'someteststory';
@@ -70,7 +70,7 @@ describe('Application life cycle test', function () {
     function userStoryExists(callback) {
         browser.get('https://' + app.fqdn + '/project/' + process.env.USERNAME + '-' + PROJECT_NAME + '/us/1');
 
-        waitForElement(by.xpath('//div[text()="' + USER_STORY_SUBJECT + '"]'), callback);
+        waitForElement(by.xpath('//div[text()[contains(., "' + USER_STORY_SUBJECT + '")]]'), callback);
     }
 
     xit('build app', function () {
@@ -110,17 +110,13 @@ describe('Application life cycle test', function () {
             // click wont work
             browser.findElement(by.className('create-project-button')).sendKeys(Keys.ENTER);
 
-            waitForElement(by.className('button-next'), function () {
-                browser.findElement(by.className('button-next')).click();
+            waitForElement(by.name('name'), function () {
+                browser.findElement(by.name('name')).sendKeys(PROJECT_NAME);
+                browser.findElement(by.xpath('//textarea[@name="description"]')).sendKeys(PROJECT_DESCRIPTION);
 
-                waitForElement(by.name('name'), function () {
-                    browser.findElement(by.name('name')).sendKeys(PROJECT_NAME);
-                    browser.findElement(by.xpath('//textarea[@name="description"]')).sendKeys(PROJECT_DESCRIPTION);
+                browser.findElement(by.xpath('//button[@title="Create project"]')).click();
 
-                    browser.findElement(by.xpath('//button[@title="Create"]')).sendKeys(Keys.ENTER);
-
-                    waitForElement(by.xpath('//span[text()="' + PROJECT_NAME + '"]'), done);
-                });
+                browser.wait(until.elementLocated(by.xpath('//span[text()[contains(., "' + PROJECT_NAME + '")]]')), TEST_TIMEOUT).then(function () { done(); });
             });
         });
     });
@@ -136,7 +132,7 @@ describe('Application life cycle test', function () {
 
                 browser.findElement(by.xpath('//button[@title="Create"]')).sendKeys(Keys.ENTER);
 
-                waitForElement(by.xpath('//span[text()="' + USER_STORY_SUBJECT + '"]'), done);
+                waitForElement(by.xpath('//span[text()[contains(., "' + USER_STORY_SUBJECT + '")]]'), done);
             });
         });
     });
@@ -151,7 +147,6 @@ describe('Application life cycle test', function () {
         execSync('cloudron restore --app ' + app.id, { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' });
     });
 
-    it('can login', login);
     it('user story is still present', userStoryExists);
 
     it('move to different location', function () {
@@ -162,6 +157,7 @@ describe('Application life cycle test', function () {
         expect(app).to.be.an('object');
     });
 
+    // origin change requires new login
     it('can login', login);
     it('user story is still present', userStoryExists);
 
@@ -174,7 +170,10 @@ describe('Application life cycle test', function () {
             waitForElement(by.xpath('//a[@title="Yes, I\'m really sure"]'), function () {
                 browser.findElement(by.xpath('//a[@title="Yes, I\'m really sure"]')).click();
 
-                waitForElement(by.className('create-project-button'), done);
+                // give some time to redirect
+                setTimeout(function () {
+                    waitForElement(by.className('create-project-button'), done);
+                }, 5000);
             });
         });
     });
