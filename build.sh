@@ -21,5 +21,5 @@ pip install taiga-contrib-ldap-auth
 
 echo "run migration scripts"
 cd /app/code/taiga-back
-python manage.py collectstatic --noinput
 python manage.py compilemessages
+python manage.py collectstatic --noinput
