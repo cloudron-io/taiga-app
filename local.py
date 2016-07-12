@@ -29,7 +29,7 @@ EMAIL_HOST_PASSWORD = "##MAIL_SMTP_PASSWORD##"
 # Database config
 DATABASES = {
     "default": {
-        "ENGINE": "transaction_hooks.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "##POSTGRESQL_DATABASE##",
         "USER": "##POSTGRESQL_USERNAME##",
         "PASSWORD": "##POSTGRESQL_PASSWORD##",
