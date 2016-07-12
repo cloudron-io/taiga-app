@@ -1,4 +1,4 @@
-FROM cloudron/base:0.8.0
+FROM cloudron/base:0.8.1
 MAINTAINER Johannes Zellner <support@cloudron.io>
 
 EXPOSE 8000
